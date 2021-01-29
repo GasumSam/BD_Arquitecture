@@ -16,3 +16,23 @@ Por este motivo, proyectamos el desarrollo de un sistema de control y análisis,
 
 ## Definición de la estrategia del DAaaS
 
+¿Qué va a ofrecer el servicio?
+
+Un dashboard dinámico que ofrezca los datos, a tiempo real  en el que podrá comprobarse, a tiempo real, la situación de los distintos cauces que componen la cuenca.
+
+
+
+
+## Arquitectura DAaaS
+
+
+
+
+
+## DAaaS Operating Model Design and Rollout
+
+
+
+
+
+## Desarrollo de plataforma DAaaS
