@@ -16,12 +16,15 @@ Por este motivo, proyectamos el desarrollo de un sistema de control y análisis,
 
 ## Definición de la estrategia del DAaaS
 
-¿Qué va a ofrecer el servicio?
+Un dashboard dinámico que ofrezca los datos, a tiempo real, de las tres principales fuentes de información recogidas para el proyecto: la naturaleza del cauce del río, las condiciones y las previsiones meteorológicas. Además, en base al procesamiento de dichos datos, un cuarto grupo proyectará, a través de machine learning, el comportamiento de la cuenca y la disponibilidad de agua a futuro.
 
-Un dashboard dinámico que ofrezca los datos, a tiempo real  en el que podrá comprobarse, a tiempo real, la situación de los distintos cauces que componen la cuenca.
+Los datos recogidos en el primer grupo (naturaleza del cauce) permitirían visualizar las alteraciones en el caudal con gran precisión, lo que se convertiría en una información de gran valor a la hora de monitorizar vertidos o posibles desvios no autorizados.
 
+La empresa Libelium (www.libelium) será la encargada de suministrar, instalar y mantener el servicio de sensores que se colocarán en diferentes puntos de los cauces de la cuenca. Para la elección del tipo de sensor que aportará los datos sobre el flujo del agua (https://www.libelium.com/iot-solutions/smart-water/) necesitaremos la aportación de una consultoría química que determine qué valores son necesarios para la correcta visualización de los valores químicos (contaminación, por ejemplo). En el caso de los valores físicos (caudal, temperatura, turbiedad, etc.) será una consultoría medioambiental la que determine los tipos de datos más importantes.
 
+Los datos sobre las condiciones medioambientales se recogerán con sensores de la serie 'Smart Agriculture' de Libelium (https://www.libelium.com/iot-solutions/smart-agriculture/) y contarán, para su diseño, con el informe de la consultoría medioambiental.
 
+La previsión meteorológica se obtendrá desde el servicio AEMET Open Data (https://opendata.aemet.es/centrodedescargas/AEMETApi?), API de la Agencia Estatal de Meteorología.
 
 ## Arquitectura DAaaS
 
