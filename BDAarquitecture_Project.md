@@ -20,17 +20,31 @@ Un dashboard dinámico que ofrezca los datos, a tiempo real, de las tres princip
 
 Los datos recogidos en el primer grupo (naturaleza del cauce) permitirían visualizar las alteraciones en el caudal con gran precisión, lo que se convertiría en una información de gran valor a la hora de monitorizar vertidos o posibles desvios no autorizados.
 
-La empresa Libelium (www.libelium) será la encargada de suministrar, instalar y mantener el servicio de sensores que se colocarán en diferentes puntos de los cauces de la cuenca. Para la elección del tipo de sensor que aportará los datos sobre el flujo del agua (https://www.libelium.com/iot-solutions/smart-water/) necesitaremos la aportación de una consultoría química que determine qué valores son necesarios para la correcta visualización de los valores químicos (contaminación, por ejemplo). En el caso de los valores físicos (caudal, temperatura, turbiedad, etc.) será una consultoría medioambiental la que determine los tipos de datos más importantes.
+La empresa Libelium (www.libelium.com) será la encargada de suministrar, instalar y mantener el servicio de sensores que se colocarán en diferentes puntos de los cauces de la cuenca (datos de ubicación por coordenadas), tecnología autónoma alimentada por energía solar y conectividad 4G. Para la elección del tipo de sensor que aportará los datos sobre el flujo del agua (https://www.libelium.com/iot-solutions/smart-water/) necesitaremos la aportación de una consultoría química que determine qué valores son necesarios para la correcta visualización de los valores químicos (contaminación, por ejemplo). En el caso de los valores físicos (caudal, temperatura, turbiedad, etc.) será una consultoría medioambiental la que determine los tipos de datos más importantes. Los datos sobre las condiciones medioambientales se recogerán con sensores de la serie 'Smart Agriculture' de Libelium (https://www.libelium.com/iot-solutions/smart-agriculture/) y contarán, para su diseño, con el informe de la consultoría medioambiental. 
 
-Los datos sobre las condiciones medioambientales se recogerán con sensores de la serie 'Smart Agriculture' de Libelium (https://www.libelium.com/iot-solutions/smart-agriculture/) y contarán, para su diseño, con el informe de la consultoría medioambiental.
-
-La previsión meteorológica se obtendrá desde el servicio AEMET Open Data (https://opendata.aemet.es/centrodedescargas/AEMETApi?), API de la Agencia Estatal de Meteorología.
+La previsión meteorológica se obtendrá desde el servicio AEMET Open Data (https://opendata.aemet.es/centrodedescargas/AEMETApi?), API de la Agencia Estatal de Meteorología (AEMET).
 
 ## Arquitectura DAaaS
 
+Desplegaremos la arquitectura del proyecto en Google Cloud Platform (GCP) con la siguiente estructura:
 
+* Cluster de Dataproc con el componente de HBase.
 
+* Dos máquinas Kafka virtualizadas, conectadas a través de Flume con HBase.
 
+* Dataset en Bucket central para datos recogidos por ambas máquinas virtuales Kafka (agua y ambientales).
+
+* Cloud Function de conexión API de AEMET con un segundo dataset en Bucket central con predicción meteorológica.
+
+* Tarea Dataproc a través de Mapreduce para generar un dataset enriquecido que proyecte a futuro las condiciones ambientales y del agua.
+
+* Conexión a través del Driver ODBC HBase de HBase con Tableau.
+
+* Dashboard Tableau a demanda del cliente.
+
+------
+
+Durante el diseño del presente ejercicio, comprobamos que Google Cloud ofrece el servicio BigTable, una alternativa a tener en cuenta para evolucionar el presente diseño arquitectónico en base a un caudal de datos en streaming que necesitamos acumular. Es una muestra de la evolución de las diferentes herramientas disponibles.
 
 ## DAaaS Operating Model Design and Rollout
 
