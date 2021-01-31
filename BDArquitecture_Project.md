@@ -1,4 +1,6 @@
-# BRAINSTORM
+# Arquitectura de datos para monitorización de cuenca hidrográfica
+
+## Brainstorm
 
 El cambio climático es una de las principales amenazas a las que se enfrenta la humanidad. Entre sus consecuencias se encuentra la ampliación de los periodos de sequía, intercalados con episodios de precipitaciones torrenciales. Esto se traduce en una cada vez más acuciante escasez de agua, unida a la incapacidad de los actuales sistemas hídricos por aprovechar este recurso natural.
 
