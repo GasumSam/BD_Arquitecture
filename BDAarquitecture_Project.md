@@ -90,7 +90,7 @@ A tal efecto, para el desarrollo se ha priorizado en la sencillez (monitorizaci�
 
 # Diagrama de la arquitectura
 
-![Arquitectura de datos para monitorización de cuenca hidrográfica](/BDArquitecture_Project_.png)
+[Arquitectura de datos para monitorización de cuenca hidrográfica](/BDArquitecture_Project_.png)
 
 [Enlace a diagrama en Google Drawings](https://docs.google.com/drawings/d/1wQxIFXGDK3snHXSAF7KA6dBUVqSDmFxiT8tY4RMxU8Y/edit?usp=sharing)
 
