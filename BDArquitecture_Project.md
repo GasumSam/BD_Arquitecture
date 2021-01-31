@@ -88,4 +88,10 @@ A tal efecto, para el desarrollo se ha priorizado en la sencillez (monitorizaci�
 4. Conectamos Spark (Streaming) con Tableau para dashboard en streaming.
 5. Conectamos HBase (*Driver ODBC HBase*) con Tableau para dashboard datos en batch.
 
+# Diagrama de la arquitectura
+
+[Arquitectura de datos para monitorización de cuenca hidrográfica](/BDArquitecture_Project_.png)
+
+[Enlace a diagrama en Google Drawings](https://docs.google.com/drawings/d/1wQxIFXGDK3snHXSAF7KA6dBUVqSDmFxiT8tY4RMxU8Y/edit?usp=sharing)
+
 
