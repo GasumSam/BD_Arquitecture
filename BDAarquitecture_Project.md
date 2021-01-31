@@ -74,9 +74,9 @@ El diseño del presente proyecto se determinará por informes medioambientales p
 
 ------------
 
-- A través de Cloud Function podríamos lanzar un script, sobre cada uno de los valores más importantes, determinando los valores medios y que lance una alerta en caso de que alguno de los log sobrepasen dichos registros (Alteración en los valores, como si de un análisis médico se tratara).
+A través de Cloud Function podríamos lanzar un script, sobre cada uno de los valores más importantes, determinando los valores medios y que lance una alerta en caso de que alguno de los log sobrepasen dichos registros (Alteración en los valores, como si de un análisis médico se tratara).
 
-## Desarrollo de plataforma DAaaS
+## Desarrollo de plataforma DAaaS
 
 El presente proyecto se basa en un caso clásico de datos en streaming con Kafka, respondiendo a la lectura a tiempo real de los sensores (PUB). Su complejidad puede residir en que dichos datos se acumulen (HBase) y estén disponibles para el despliegue, a posteriori, de una utilidad Machine Learning que permita ajustar las proyecciones a futuro y adelantarse a las posibles alteraciones medioambientales. Es decir, ¿Y si el big data pudiese determinar cuándo es necesario abrir o cerrar las compuertas de un embalse? ¿Y si el Machine Learning pudiese determinar las consecuencias de la producción de alimentos en la cuenca en función de la naturaleza del ciclo del agua?, etc.
 
