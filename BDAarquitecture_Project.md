@@ -30,13 +30,13 @@ Desplegaremos la arquitectura del proyecto en Google Cloud Platform (GCP) con la
 
 * Cluster de Dataproc con el componente de HBase.
 
-* Dos máquinas Kafka virtualizadas, conectadas a través de Flume con HBase.
+* Dos máquinas Kafka virtualizadas, conectadas a través de Storm con HBase.
 
 * Dataset en Bucket central para datos recogidos por ambas máquinas virtuales Kafka (agua y ambientales).
 
 * Cloud Function de conexión API de AEMET con un segundo dataset en Bucket central con predicción meteorológica.
 
-* Tarea Dataproc a través de Mapreduce para generar un dataset enriquecido que proyecte a futuro las condiciones ambientales y del agua.
+* Tarea Dataproc a través de Spark para generar un dataset enriquecido que proyecte a futuro las condiciones ambientales y del agua.
 
 * Conexión a través del Driver ODBC HBase de HBase con Tableau.
 
@@ -44,12 +44,42 @@ Desplegaremos la arquitectura del proyecto en Google Cloud Platform (GCP) con la
 
 ------
 
+*Nota*: La idea de utilizar el componente Storm es porque nos permitiría desplegar ad-hoc otras herramientas como Hive, en función de las necesidades de desarrollo del proyecto. Esto se traduce en una mayor versatilidad de la estructura.
+
 Durante el diseño del presente ejercicio, comprobamos que Google Cloud ofrece el servicio BigTable, una alternativa a tener en cuenta para evolucionar el presente diseño arquitectónico en base a un caudal de datos en streaming que necesitamos acumular. Es una muestra de la evolución de las diferentes herramientas disponibles.
 
 ## DAaaS Operating Model Design and Rollout
 
+### Diseño de la infraestructura
 
+El diseño del presente proyecto se determinará por informes medioambientales previos y sobre el estudio de las características físicas y orográficas de la cuenca hidrigráfica (río principal y afluentes). Esta información nos permitiría *elaborar un mapa con los puntos de monitorización óptimos*, de manera que se cumplan los siguientes requisitos:
 
+* *Cobertura ponderada de la cuenca hidrográfica*. Los puntos de obtención de información deben permitir la monitorización de todo el territorio en función de los afluentes, zonas potenciales de erosión hídrica (zonas de cultivo próxima o núcleos poblacionales) o especial vulnerabilidad a los cambios climáticos.
 
+* *Número total de puntos de monitorización*. Cada punto de sondeo supone el despliegue de dos sensores, uno para la naturaleza del agua y otro ambiental. Este aspecto es fundamental para el presupuesto final del proyecto.
+
+* *Conectividad de los puntos de monitorización*. En función de las zonas recomendadas de instalación se tendrán en cuenta aspectos como la conectividad de los datos o el funcionamiento (autosuficiente mediante energía solar).
+
+* *Mantenimiento*. Será necesario contemplar los posibles fallos técnicos en los puntos de monitorización.
+
+### Diseño del Data Lake
+
+*Nota:* El funcionamiento del flujo de datos estará determinado por el diseño de la infraestructura y los requerimientos del cliente (periodicidad, por ejemplo. No siendo lo mismo que se obtengan datos de un número determinado de sensores una vez al día que cada hora en punto). Aún así, simulamos el diseño en base a un sistema de monitorización a tiempo real, al margen de los recursos que se necesiten:
+
+1. Cada hora, cada sensor (PUB) envía un log con su información (event) a HBase (SUB) a través de Storm, que a su vez se conecta con HDFS.
+
+2. De forma simultánea, con registro horario similar, Cloud Function ejecuta un script por el que se genera un dataset, desde la API de AEMET, con la proyección meteorológica por horas para la zona correspondiente a cada sensor. 
+
+3. Diariamente, a través de Spark, directamente sobre HDFS, ejecutamos la tarea de generar un nuevo dataset enriquecido en el que se proyecten las condiciones por horas (durante los siguientes siete días). Una función que nos permitiría desplegar una función de Machine Learning por la cual se ajusten los posibles fallos del procesamiento de datos.
+
+------------
+
+- A través de Cloud Function podríamos lanzar un script, sobre cada uno de los valores más importantes, determinando los valores medios y que lance una alerta en caso de que alguno de los log sobrepasen dichos registros (Alteración en los valores, como si de un análisis médico se tratara).
 
 ## Desarrollo de plataforma DAaaS
+
+El presente proyecto se basa en un caso clásico de datos en streaming con Kafka, respondiendo a la lectura a tiempo real de los sensores (PUB). Su complejidad puede residir en que dichos datos se acumulen (HBase) y estén disponibles para el despliegue, a posteriori, de una utilidad Machine Learning que permita ajustar las proyecciones a futuro y adelantarse a las posibles alteraciones medioambientales. Es decir, ¿Y si el big data pudiese determinar cuándo es necesario abrir o cerrar las compuertas de un embalse? ¿Y si el Machine Learning pudiese determinar las consecuencias de la producción de alimentos en la cuenca en función de la naturaleza del ciclo del agua?, etc.
+
+A tal efecto, para el desarrollo se ha priorizado en la sencillez (monitorización), añadiendo las funciones de almacenamiento (HBase) y procesamiento (Spark) para un dataset enriquecido que de soporte al futuro desarrollo Machine Learning.
+
+
